@@ -1,0 +1,39 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><h1 id="errorhandling">Error Handling</h2>
+
+<h3 id="usingloghandlerextensionformissingtranslations">Using log handler extension for missing translations</h4>
+
+<p>There is an extension for <code>angular-translate</code> which logs warnings into console
+if you try to translate a translation id which doesn't exist. Install the extension via:</p>
+
+<pre><code>$ bower install angular-translate-handler-log
+</code></pre>
+
+<p>To use this handler, all you have to do is to call <code>useMissingTranslationHandlerLog()</code> on <code>$translateProvider</code>:</p>
+
+<pre><code class="js">$translateProvider.useMissingTranslationHandlerLog();
+</code></pre>
+
+<h3 id="definingcustomhandlerformissingtranslations">Defining custom handler for missing translations</h4>
+
+<p>Of course you want to be able to use your own custom handler. Besides <code>useMissingTranslationHandlerLog()</code>
+there's another method called <code>useMissingTranslationHandler()</code> which expects the name
+of a factory which returns your custom handler. So how does that look like?</p>
+
+<pre><code class="js">var app = angular.module('myApp', ['pascalprecht.translate'], function ($translateProvider) {
+  // tell angular-translate to use your custom handler
+  $translateProvider.useMissingTranslationHandler('myCustomHandlerFactory');
+});
+
+// define custom handler
+app.factory('myCustomHandlerFactory', function (dep1, dep2) {
+  // has to return a function which gets a tranlation id
+  return function (translationID) {
+    // do something with dep1 and dep2
+  };
+});
+</code></pre>
+
+<p>So you're able to extend <code>angular-translate</code>'s functionality by yourself!</p></div>

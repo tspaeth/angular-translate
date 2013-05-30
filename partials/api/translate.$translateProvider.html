@@ -1,0 +1,154 @@
+<h1><code ng:non-bindable="">$translateProvider</code>
+<span class="hint">(service in module <code ng:non-bindable="">translate</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>$tranlateProvider allows developers to register translation-tables, asynchronous loaders
+and similar to configure translation behavior directly inside of a module.</p></div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="preferredLanguage">preferredLanguage(langKey)</h3>
+<div class="preferredlanguage"><p>Tells the module which of the registered translation tables to use for translation
+at initial startup by passing a language key. Similar to <code>$translateProvider#uses</code>
+only that it says which language to <strong>prefer</strong>.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">langKey – {string} – </code>
+<p>A language key.</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="storageKey">storageKey(key)</h3>
+<div class="storagekey"><p>Tells the module which key must represent the choosed language by a user in the storage.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">key – {string} – </code>
+<p>A key for the storage.</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="storagePrefix">storagePrefix(prefix)</h3>
+<div class="storageprefix"><p>Sets prefix for storage key.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">prefix – {string} – </code>
+<p>Storage key prefix</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="translations">translations(key, translationTable)</h3>
+<div class="translations"><p>Registers a new translation table either in general or for specific language key.</p>
+
+<p>You can register a translation table just by passing an object hash where a key
+represents a translation id and a value the concrete translation. Here is an
+example:</p>
+
+<pre class="prettyprint linenums">
+ // register translation table
+ $translateProvider.translations({
+   'HEADLINE_TEXT':'Hey Guys, this is a headline!',
+   'SOME_TEXT': 'A text anywhere in the app.'
+ });
+</pre>
+
+<p>In the example above there are two registered translations,
+HEADLINE<em>TEXT and SOME</em>TEXT.</p>
+
+<p>To register a translation table for specific language, pass a defined language
+key as first parameter.</p>
+
+<pre class="prettyprint linenums">
+ // register translation table for language: 'de_DE'
+ $translateProvider.translations('de_DE', {
+   'GREETING': 'Hallo Welt!'
+ });
+
+ // register another one
+ $translateProvider.translations('en_US', {
+   'GREETING': 'Hello world!'
+ });
+</pre>
+
+<p>When registering multiple translation tables for for the same language key,
+the actual translation table gets extended. This allows you to define module
+specific translation which only get added, once a specific module is loaded in
+your app.</p>
+
+<p>Invoking this method with no arguments returns the translation table which was
+registered with no language key. Invoking it with a language key returns the
+related translation table.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">key – {string} – </code>
+<p>A language key.</p></li>
+<li><code ng:non-bindable="">translationTable – {object} – </code>
+<p>A plain old JavaScript object that represents a translation table.</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="useCookieStorage">useCookieStorage()</h3>
+<div class="usecookiestorage"><p>Tells angular-translate to use <code>$translateCookieStorage</code> service as storage layer.</p></div>
+</li>
+<li><h3 id="useLoader">useLoader(loaderFactory, options)</h3>
+<div class="useloader"><p>Tells angular-translate to use any other service as loader.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">loaderFactory – {string} – </code>
+<p>Factory name to use</p></li>
+<li><code ng:non-bindable="">options<i>(optional)</i> – {Object=} – </code>
+<p>Optional configuration object</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="useLocalStorage">useLocalStorage()</h3>
+<div class="uselocalstorage"><p>Tells angular-translate to use <code>$translateLocalStorage</code> service as storage layer.</p></div>
+</li>
+<li><h3 id="useMissingTranslationHandler">useMissingTranslationHandler(factory)</h3>
+<div class="usemissingtranslationhandler"><p>Expects a factory name which later gets instantiated with <code>$injector</code>.
+This method can be used to tell angular-translate to use a custom
+missingTranslationHandler. Just build a factory which returns a function
+and expects a translation id as argument.</p>
+
+<p>Example:
+<pre class="prettyprint linenums">
+ app.config(function ($translateProvider) {
+   $translateProvider.useMissingTranslationHandler('customHandler');
+ });
+
+ app.factory('customHandler', function (dep1, dep2) {
+   return function (translationId) {
+     // something with translationId and dep1 and dep2
+   };
+ });
+</pre><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">factory – {string} – </code>
+<p>Factory name</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="useMissingTranslationHandlerLog">useMissingTranslationHandlerLog()</h3>
+<div class="usemissingtranslationhandlerlog"><p>Tells angular-translate to use built-in log handler when trying to translate
+a translation Id which doesn't exist.</p>
+
+<p>This is actually a shortcut method for <code>useMissingTranslationHandler()</code>.</p></div>
+</li>
+<li><h3 id="useStaticFilesLoader">useStaticFilesLoader(options)</h3>
+<div class="usestaticfilesloader"><p>Tells angular-translate to use <code>$translateStaticFilesLoader</code> extension service as loader.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">options<i>(optional)</i> – {Object=} – </code>
+<p>Optional configuration object</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="useStorage">useStorage()</h3>
+<div class="usestorage"><p>Tells angular-translate to use custom service as storage layer.</p></div>
+</li>
+<li><h3 id="useUrlLoader">useUrlLoader(url)</h3>
+<div class="useurlloader"><p>Tells angular-translate to use <code>$translateUrlLoader</code> extension service as loader.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">url – {string} – </code>
+<p>Url</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="uses">uses(langKey)</h3>
+<div class="uses"><p>Set which translation table to use for translation by given language key. When
+trying to 'use' a language which isn't provided, it'll throw an error.</p>
+
+<p>You actually don't have to use this method since <code>$translateProvider#preferredLanguage</code>
+does the job too.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">langKey – {string} – </code>
+<p>A language key.</p></li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>

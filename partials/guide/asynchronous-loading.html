@@ -1,0 +1,115 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><h1 id="asynchronousloading">Asynchronous Loading</h2>
+
+<p>Okay, different translations for different languages is pretty cool. But it's even better if you're able to load translations asynchronously right? <code>angular-translate</code> has some pretty cool <a href="Extensions">extensions</a> which support asynchronous and lazy loading of translation data. And it works like a charm.</p>
+
+<h3 id="usingasynchronousloaders">Using asynchronous loaders</h4>
+
+<p><code>angular-translate</code> provides a pretty clever way to tell $translate service to load data asynchronously. To load your data from a server you have to use an asynchronous loader, which gets invoked later at runtime when it's needed. There are three possible ways to use a loader.</p>
+
+<h4 id="usingextensiondtranslateurlloader">Using extension: $translateUrlLoader</h5>
+
+<p>This is possibly the simplest way of loading translation data asynchronously. All you have to do, is to install the <code>angular-translate-loader-url</code> extension via bower</p>
+
+<pre><code class="js">$ bower install angular-translate-loader-url
+</code></pre>
+
+<p>and register a valid endpoint which later gets requested by <code>angular-translate</code>. Here's an example:</p>
+
+<pre><code class="js">$translateProvider.useUrlLoader('foo/bar.json');
+$translateProvider.preferredLanguage('en_US');
+</code></pre>
+
+<p>So, what happens here? <code>angular-translate</code> uses the extension to transform the given string, to a real loader function which can be invoked later at runtime. In addition to that, telling <code>$translateProvider</code> to use the language key 'en_US', adds the language key as request parameter to the given loader string. So, the example above actually requests <code>foo/bar.json?lang=en_US</code>.</p>
+
+<p><code>angular-translate</code> also notices that there isn't any translation data available at startup and will invoke the loader automatically as soon as possible.</p>
+
+<h4 id="usingextensionstaticfilesloader">Using extension: static-files loader</h5>
+
+<p>In case you haven't just a URL which expects a <code>lang</code> parameter to return a JSON that contains your translations, but several localization files which match a specific pattern, you probably want to use the <code>angular-translate-loader-static-files</code> extension which describes the pattern of your localization files.</p>
+
+<p>First you have to install the extension via bower:</p>
+
+<pre><code class="js">$ bower install angular-translate-loader-static-files
+</code></pre>
+
+<p>To specify a pattern, the following information is required:</p>
+
+<ul>
+<li><strong>prefix</strong> - specifies file prefix</li>
+<li><strong>suffix</strong> - specifies file suffix</li>
+</ul>
+
+<p>Let's say you have two localization files <code>locale-de_DE.json</code> and <code>locale-en_US.json</code>. You can simply use the static-files loader with this pattern:</p>
+
+<pre><code class="js">$translateProvider.useStaticFilesLoader({
+    prefix: 'locale-',
+    suffix: '.json'
+});
+$translateProvider.preferredLanguage('en_US');
+</code></pre>
+
+<p>This will load <code>locale-en_US.json</code>. And again, since there isn't any translation data available yet, it'll load as soon as possible automatically.</p>
+
+<p>To lazy load another translation file at runtime, simply invoke <code>$translate.uses()</code> with a specific language key.</p>
+
+<p><strong><a href="http://plnkr.co/edit/Hw4iMz">&rarr; View Plunker</a></strong></p>
+
+<h4 id="usingcustomloaderservice">Using custom loader service</h5>
+
+<p>If non of the above possibilities fit to your needs, you can register an asynchronous loader as a factory function. Just declare a new service on your module and tell <code>$translateProvider</code> to use this one as an asynchronous loader.</p>
+
+<p>The factory function has to return a function, which expects an object where at least the language key property exists. With this architecture you're as free as possible and have the full control of how your asynchronous loader should behave. Here is an example:</p>
+
+<pre><code class="js">var app = angular.module('myModule', []);
+
+app.config(function ($translateProvider) {
+  $translateProvider.useLoader('customLoader', {
+     // if you have some custom properties, go for it!
+  });
+});
+
+app.factory('customLoader', function ($http, $q) {
+    // return loaderFn
+    return function (options) {
+        var deferred = $q.defer();
+        // do something with $http, $q and key to load localization files
+
+        var data = {
+            'TEXT': 'Fooooo'
+        };
+
+        return deferred.resolve(data);
+        // or
+        return deferred.reject(options.key);
+    };
+});
+</code></pre>
+
+<p>You also have to make sure, that your loader function returns a promise. It should either gets resolved with your translation data, or rejected with the language key.</p>
+
+<p><strong><a href="http://plnkr.co/edit/n6MEMU">&rarr; View Plunker</a></strong></p>
+
+<h3 id="loadingasynchronouslywithoutautoload">Loading asynchronously without autoload</h4>
+
+<p>And of course, you're able to combine the use of asynchronous loaders with simply registering translations. Let's say you have an app, where one language is already available and others should be loaded lazy, once they're needed. Simply register your translation, your asynchronous loader and tell <code>angular-translate</code>which language to use:</p>
+
+<pre><code class="js">$translateProvider.translations('de_DE', {
+    'HELLO_TEXT': 'Hello World!'
+});
+
+$translateProvider.useStaticFilesLoader({
+    'prefix': 'locale-',
+    'suffix': '.json'
+});
+
+$translateProvider.preferredLanguage('de_DE');
+</code></pre>
+
+<p>Now <code>angular-translate</code> notices that there is an existing translation table for 'de_DE'. It doesn't have to load any other localization file until somebody says so.</p>
+
+<p>This works with all possible signatures.</p>
+
+<p><strong><a href="http://plnkr.co/edit/IYN1cT">&rarr; View Plunker</a></strong></p></div>
