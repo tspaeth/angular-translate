@@ -44,7 +44,7 @@ NG_DOCS={
       "id": "index",
       "shortName": "Guide",
       "type": "overview",
-      "keywords": "$translateprovider also and angular angular-translate api app as better bower checkout com config cool dependency discussions doc else features foo for full function google guide hello how if in inject install into is it its learn like ll make making md module myapp on or org out overview paragraph pascalprecht possible projects public questions quick read reference start teach the there things this title to translate translations use var via welcome what when you your"
+      "keywords": "$translateprovider also and angular angular-translate api app apps as better bower bring checkout com config cool dependency developer discussions doc easiest easy else features foo for full function google guide hello how i18n if in inject install internationalization into is it its learn like ll localization made make making md module myapp on or org out overview paragraph pascalprecht possible projects public questions quick read reference start teach the there things this title to translate translations use var via way what when you your"
     },
     {
       "section": "guide",
