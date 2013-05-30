@@ -9,7 +9,7 @@ NG_DOCS={
       "id": "index",
       "shortName": "API Reference",
       "type": "overview",
-      "keywords": "api foo overview reference"
+      "keywords": "angular-translate api checkout guide how if know overview reference the to want welcome works you"
     },
     {
       "section": "api",
