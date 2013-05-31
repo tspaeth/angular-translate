@@ -13,28 +13,28 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "translate.$translate",
+      "id": "pascalprecht.translate.$translate",
       "shortName": "$translate",
       "type": "object",
-      "keywords": "$interpolate $log $q $rootscope $scope $translate actual also an and angular-translate api app asynchronously at available by care change choosed configured contents core dynamic excepts fallback fallbacklanguage for function given hash headline_text id in interpolate interpolateparams is isn it key language let load loaders method object of optional parameters preferred preferredlanguage registered remember represents returns runtime service storage storagekey store storing takes tells the this to token translate translatedtext translation translationid tries trying use used uses values when which with your"
+      "keywords": "$interpolate $log $q $rootscope $scope $translate actual also an and angular-translate api app asynchronously at available by care change choosed configured contents core dynamic excepts fallback fallbacklanguage for function given hash headline_text id in interpolate interpolateparams is isn it key language let load loaders method object of optional parameters pascalprecht preferred preferredlanguage registered remember represents returns runtime service storage storagekey store storing takes tells the this to token translate translatedtext translation translationid tries trying use used uses values when which with your"
     },
     {
       "section": "api",
-      "id": "translate.$translateProvider",
+      "id": "pascalprecht.translate.$translateProvider",
       "shortName": "$translateProvider",
       "type": "object",
-      "keywords": "$injector $tranlateprovider $translatecookiestorage $translatelocalstorage $translateprovider $translatestaticfilesloader $translateurlloader above actual actually added allows an and angular-translate another any anywhere api app are argument arguments as asynchronous at be behavior build built-in by can choosed concrete config configuration configure custom customhandler de_de define defined dep1 dep2 developers directly does doesn don either en_us error example exist expects extended extension factory fallbacklanguage first for function general get gets given greeting guys hallo handler hash have headline headline_text hello here hey id in initial inside instantiated invoking is isn it javascript job just key langkey language later layer ll loaded loader loaderfactory loaders log method missing missingtranslationhandler module multiple must name new no object of old once one only optional options or other parameter pass passing plain preferredlanguage prefix provided register registered registering registers related represent represents return returns same says service set sets shortcut similar since some_text something specific startup storage storagekey storageprefix table tables tell tells text that the there this throw to too translate translation translation-tables translationid translations translationtable trying two url use usecookiestorage used useloader uselocalstorage usemissingtranslationhandler usemissingtranslationhandlerlog user uses usestaticfilesloader usestorage useurlloader value was welt when where which with world you your"
+      "keywords": "$injector $tranlateprovider $translatecookiestorage $translatelocalstorage $translateprovider $translatestaticfilesloader $translateurlloader above actual actually added allows an and angular-translate another any anywhere api app are argument arguments as asynchronous at be behavior build built-in by can choosed concrete config configuration configure custom customhandler de_de define defined dep1 dep2 developers directly does doesn don either en_us error example exist expects extended extension factory fallbacklanguage first for function general get gets given greeting guys hallo handler hash have headline headline_text hello here hey id in initial inside instantiated invoking is isn it javascript job just key langkey language later layer ll loaded loader loaderfactory loaders log method missing missingtranslationhandler module multiple must name new no object of old once one only optional options or other parameter pascalprecht pass passing plain preferredlanguage prefix provided register registered registering registers related represent represents return returns same says service set sets shortcut similar since some_text something specific startup storage storagekey storageprefix table tables tell tells text that the there this throw to too translate translation translation-tables translationid translations translationtable trying two url use usecookiestorage used useloader uselocalstorage usemissingtranslationhandler usemissingtranslationhandlerlog user uses usestaticfilesloader usestorage useurlloader value was welt when where which with world you your"
     },
     {
       "section": "api",
-      "id": "translate.directive:translate",
+      "id": "pascalprecht.translate.directive:translate",
       "shortName": "translate",
       "type": "directive",
       "keywords": "$compile $digest $filter $interpolate $rootscope $scope $translateprovider an angular api as attribute be can config content controller could directive dom dynamic either element expect filter following function given hello html id index inject internally interpolated into is it js literal module name ng-controller ngview object optional or pascalprecht pass passed possible scenario script should string text the there through to tobe translate translatectrl translates translation translation_id translationid translations uses value values which with_values"
     },
     {
       "section": "api",
-      "id": "translate.filter:translate",
+      "id": "pascalprecht.translate.filter:translate",
       "shortName": "translate",
       "type": "filter",
       "keywords": "$parse $scope $translate $translateprovider accepts angular api be config contents controller dynamic dynamized filter following function hash hello html id index interpolate interpolateparams into is js literal module name ng-controller ngview object optional or parameters pascalprecht pass script service string text the there though to translate translatectrl translated translation translation_id translationid translations uses value values with_values"
