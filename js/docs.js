@@ -285,15 +285,7 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
       MODULE_DIRECTIVE_INPUT = /^((?:(?!^angular\.)[^\.])+)\.directive:input\.([^\.]+)$/,
       MODULE_FILTER = /^((?:(?!^angular\.)[^\.])+)\.filter:([^\.]+)$/,
       MODULE_SERVICE = /^((?:(?!^angular\.)[^\.])+)\.([^\.]+?)(Provider)?$/,
-      MODULE_TYPE = /^((?:(?!^angular\.)[^\.])+)\..+\.([A-Z][^\.]+)$/,
-      URL = {
-        module: 'http://docs.angularjs.org/guide/module',
-        directive: 'http://docs.angularjs.org/guide/directive',
-        input: 'http://docs.angularjs.org/api/ng.directive:input',
-        filter: 'http://docs.angularjs.org/guide/dev_guide.templates.filters',
-        service: 'http://docs.angularjs.org/guide/dev_guide.services',
-        type: 'http://docs.angularjs.org/guide/types'
-      };
+      MODULE_TYPE = /^((?:(?!^angular\.)[^\.])+)\..+\.([A-Z][^\.]+)$/;
 
 
   /**********************************
@@ -352,10 +344,10 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
 
     // Update breadcrumbs
     var breadcrumb = $scope.breadcrumb = [],
-      match;
+      match, sectionPath = (NG_DOCS.html5Mode ? '' : '#/') +  sectionId;
 
     if (partialId) {
-      breadcrumb.push({ name: sectionName, url: sectionId });
+      breadcrumb.push({ name: sectionName, url: sectionPath });
       if (partialId == 'angular.Module') {
         breadcrumb.push({ name: 'angular.Module' });
       } else if (match = partialId.match(GLOBALS)) {
@@ -363,20 +355,20 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
       } else if (match = partialId.match(MODULE)) {
         breadcrumb.push({ name: match[1] });
       } else if (match = partialId.match(MODULE_FILTER)) {
-        breadcrumb.push({ name: match[1], url: sectionId + '/' + match[1] });
+        breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
         breadcrumb.push({ name: match[2] });
       } else if (match = partialId.match(MODULE_DIRECTIVE)) {
-        breadcrumb.push({ name: match[1], url: sectionId + '/' + match[1] });
+        breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
         breadcrumb.push({ name: match[2] });
       } else if (match = partialId.match(MODULE_DIRECTIVE_INPUT)) {
-        breadcrumb.push({ name: match[1], url: sectionId + '/' + match[1] });
-        breadcrumb.push({ name: 'input', url: URL.input });
+        breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
+        breadcrumb.push({ name: 'input' });
         breadcrumb.push({ name: match[2] });
       } else if (match = partialId.match(MODULE_TYPE)) {
-        breadcrumb.push({ name: match[1], url: sectionId + '/' + match[1] });
+        breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
         breadcrumb.push({ name: match[2] });
       }  else if (match = partialId.match(MODULE_SERVICE)) {
-        breadcrumb.push({ name: match[1], url: sectionId + '/' + match[1] });
+        breadcrumb.push({ name: match[1], url: sectionPath + '/' + match[1] });
         breadcrumb.push({ name: match[2] + (match[3] || '') });
       } else if (match = partialId.match(MODULE_MOCK)) {
         breadcrumb.push({ name: 'angular.mock.' + match[1] });
@@ -401,8 +393,6 @@ docsApp.controller.DocsController = function($scope, $location, $window, section
   $scope.subpage = false;
   $scope.futurePartialTitle = null;
   $scope.loading = 0;
-  $scope.URL = URL;
-
 
   if (!$location.path() || INDEX_PATH.test($location.path())) {
     $location.path('/api').replace();

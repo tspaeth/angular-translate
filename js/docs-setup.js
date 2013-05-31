@@ -96,9 +96,9 @@ NG_DOCS={
       "keywords": "$translateprovider also angular-translate are async care changed com cookie done extensions for from get guide https information instead interfaces introducing is let-your-app-remember-the-language ll loader loading local longer make migration module name new ngtranslate no now of overview pascalprecht please preferredlanguage registering-asynchronous-loaders registerloader rememberlanguage repos rest see some static-files storage storages supported sure take the there they to translate url use usecookiestorage uselocalstorage uses usestorage using work"
     }
   ],
+  "html5Mode": false,
   "scripts": [
     "angular.min.js",
     "angular-translate.min.js"
-  ],
-  "html5Mode": false
+  ]
 };
