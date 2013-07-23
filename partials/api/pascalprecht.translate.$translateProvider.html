@@ -6,7 +6,14 @@
 <div class="description"><p>$tranlateProvider allows developers to register translation-tables, asynchronous loaders
 and similar to configure translation behavior directly inside of a module.</p></div>
 <div class="member method"><h2 id="Methods">Methods</h2>
-<ul class="methods"><li><h3 id="fallbackLanguage">fallbackLanguage(langKey)</h3>
+<ul class="methods"><li><h3 id="addInterpolation">addInterpolation(factory)</h3>
+<div class="addinterpolation"><p>Adds interpolation services to angular-translate, so it can manage them.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">factory – {object} – </code>
+<p>Interpolation service factory</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="fallbackLanguage">fallbackLanguage(langKey)</h3>
 <div class="fallbacklanguage"><p>Tells the module which of the registered translation tables to use when missing translations
 at initial startup by passing a language key. Similar to <code>$translateProvider#uses</code>
 only that it says which language to <strong>fallback</strong>.</p><h4 id="Parameters">Parameters</h4>
@@ -35,6 +42,22 @@ only that it says which language to <strong>prefer</strong>.</p><h4 id="Paramete
 <div class="storageprefix"><p>Sets prefix for storage key.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">prefix – {string} – </code>
 <p>Storage key prefix</p></li>
+</ul>
+</div>
+</li>
+<li><h3 id="translationNotFoundIndicator">translationNotFoundIndicator(indicator)</h3>
+<div class="translationnotfoundindicator"><p>Sets an indicator which is used when a translation isn't found. E.g. when
+setting the indicator as 'X' and one tries to translate a translation id
+called <code>NOT_FOUND</code>, this will result in <code>X NOT_FOUND X</code>.</p>
+
+<p>Internally this methods sets a left indicator and a right indicator using
+<code>$translateProvider.translationNotFoundIndicatorLeft()</code> and
+<code>$translateProvider.translationNotFoundIndicatorRight()</code>.</p>
+
+<p><strong>Note</strong>: These methods automatically add a whitespace between the indicators
+and the translation id.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">indicator – {string} – </code>
+<p>An indicator, could be any string.</p></li>
 </ul>
 </div>
 </li>
@@ -89,6 +112,15 @@ related translation table.</p><h4 id="Parameters">Parameters</h4>
 <li><h3 id="useCookieStorage">useCookieStorage()</h3>
 <div class="usecookiestorage"><p>Tells angular-translate to use <code>$translateCookieStorage</code> service as storage layer.</p></div>
 </li>
+<li><h3 id="useInterpolation">useInterpolation(factory)</h3>
+<div class="useinterpolation"><p>Tells angular-translate which interpolation style to use as default, application-wide.
+Simply pass a factory/service name. The interpolation service has to implement
+the correct interface.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">factory – {string} – </code>
+<p>Interpolation service name.</p></li>
+</ul>
+</div>
+</li>
 <li><h3 id="useLoader">useLoader(loaderFactory, options)</h3>
 <div class="useloader"><p>Tells angular-translate to use any other service as loader.</p><h4 id="Parameters">Parameters</h4>
 <ul class="parameters"><li><code ng:non-bindable="">loaderFactory – {string} – </code>
@@ -100,6 +132,10 @@ related translation table.</p><h4 id="Parameters">Parameters</h4>
 </li>
 <li><h3 id="useLocalStorage">useLocalStorage()</h3>
 <div class="uselocalstorage"><p>Tells angular-translate to use <code>$translateLocalStorage</code> service as storage layer.</p></div>
+</li>
+<li><h3 id="useMessageFormatInterpolation">useMessageFormatInterpolation()</h3>
+<div class="usemessageformatinterpolation"><p>Tells angular-translate to use interpolation functionality of messageformat.js.
+This is useful when having high level pluralization and gender selection.</p></div>
 </li>
 <li><h3 id="useMissingTranslationHandler">useMissingTranslationHandler(factory)</h3>
 <div class="usemissingtranslationhandler"><p>Expects a factory name which later gets instantiated with <code>$injector</code>.
