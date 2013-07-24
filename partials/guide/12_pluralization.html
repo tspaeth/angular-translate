@@ -3,27 +3,27 @@
 </h1>
 <div><h1 id="pluralization">Pluralization</h2>
 
-<p>Wow we've come far! We learned all about the different components angular-translate
-provides, we know how to introduce many translation tables at a time, we also
+<p>Wow, we've come far! We learned all about the different components angular-translate
+provides and we know how to introduce many translation tables at a time. Also we
 made use of different kind of storages to let our app remember the language over
-cross http requests and last but not least, we used asynchronous loaders, to
-loader our translation data asynchronously from a server! Wow!</p>
+cross http requests and, last but not least, we used asynchronous loaders to
+load our translation data asynchronously from a server! Wow!</p>
 
 <p>But there's still a thing we haven't talked about yet: <strong>pluralization</strong>. Pluralization
-is a pretty hard topic when it comes to localization and internationalization.
+is a pretty hard topic when it comes to localization (l10n) and internationalization (i18n).
 Different languages and cultures use different interpretations of how a language
 behaves in certain situations. Fortunately, there is a
-<a href="http://userguide.icu-project.org/formatparse/messages">standard</a> that specifies
-all that kind of stuff. However, this doesn't change the fact that its hard to
-implement.</p>
+<a href="http://userguide.icu-project.org/formatparse/messages">standard</a> which specifies
+all that kind of stuff. However, this doesn't change the fact that it's a challenge
+to implement.</p>
 
-<p><a href="https://github.com/SlexAxton">Alex Sexton</a> did the job and built a JavaScript
+<p>Luckily, <a href="https://github.com/SlexAxton">Alex Sexton</a> did the job already and built a JavaScript
 library that implements the <em>ICU User Guide</em> spec. It's called MessageFormat and
 you can find it right <a href="https://github.com/SlexAxton/messageformat.js">here</a>.</p>
 
 <h3 id="angulartranslatemeetsmessageformat">angular-translate meets MessageFormat</h4>
 
-<p>We thought, the best way to bring pluralization to angular-translate, is to adapt
+<p>In our opinion, the best way to bring pluralization to angular-translate is to adapt
 the functionality of MessageFormat, since it solves all the problems including
 <a href="https://github.com/SlexAxton/messageformat.js#simple-variable-replacement">simple variable replacement</a>,
 <a href="https://github.com/SlexAxton/messageformat.js#selectformat">SelectFormat</a>,
@@ -37,7 +37,7 @@ interpolation service via Bower like this:</p>
 <pre><code>$ bower install angular-translate-interpolation-messageformat
 </code></pre>
 
-<p>Okay, easy. Not embed it in your HTML document, so we have access to the provided
+<p>Okay, easy. Don't forget to embed it in your HTML document, so we have access to the provided
 service. Don't forget to embed MessageFormat.js itself first:</p>
 
 <pre class="prettyprint linenums">
@@ -46,7 +46,7 @@ service. Don't forget to embed MessageFormat.js itself first:</p>
 </pre>
 
 <p>Once everything is there, we can use <code>$translateProvider</code> to tell angular-translate
-to use the MessageFormat interpolation, instead of the default interpolation.
+to use the MessageFormat interpolation, instead of the default one.
 <code>$translateProvider</code> provides a method called <code>useMessageFormatInterpolation()</code>
 which does the trick. We also have to use <code>$translateProvider.preferredLanguage()</code>
 again, to let MessageFormat know, which locale to use for
@@ -62,7 +62,7 @@ against possible values. So what does that mean? Since you are now relying on
 MessageFormat interpolation rather then default interpolation, you can now use
 the syntax MessageFormat.js expects to interpolate your translations.</p>
 
-<p>Let's take some of MessageFormat's examples provided in it's README file. This is
+<p>Let's take some of MessageFormat's examples provided in its README file. This is
 how some translations could look like:</p>
 
 <pre><code>{
@@ -91,8 +91,8 @@ and use high level pluralization within your translations!</p>
 
 <p>Actually it's pretty cool that we are able to use MessageFormat as our interpolation
 engine. Unfortunately, when replacing MessageFormat interpolation with angular-translate's
-default interpolation, there's a big problem. Take a look at the following code,
-do you see any differents?</p>
+default interpolation, there's a big problem. Take a look at the following code:
+Do you see any differents?</p>
 
 <pre><code>{
   "DEFAULT_INTERPOLATION": "This is a translation that uses default interpolation with a dynamic value: {{value}}",
@@ -115,33 +115,34 @@ MessageFormat interpolation to have full featured pluralization support.</p>
 
 <p>Since its a bit silly to re-implement MessageFormat's functionality within
 angular-translate, we can't really use both interpolation types in a single translation.
-What we <em>can</em> do, is to use one interpolation type generally application-wide
+But we <em>can</em> use one interpolation type application-wide
 and other interpolation types in specific cases. This means you would say for example:
 "<em>Please use default interpolation for all of my translations, except for translation
 A, B and C</em>".</p>
 
 <p>With that construct you're able to use all the cool features Angular provides
-with it's interpolation service and in addition you can use MessageFormat interpolation
-for translation id's that contain pluralization.</p>
+with its interpolation service and in addition you can use MessageFormat interpolation
+for translation ids which contain pluralization.</p>
 
 <p>So how do we get this working? It's easy. Seriously. Once you have installed
-MessageFormat and the MessageFormat interpolation service, you actually have
+MessageFormat and its interpolation service, you actually have
 everything you need. All you have to do, is not to say you want to use
-MessageFormat interpolation for all of your translations, but for specific translations.</p>
+MessageFormat interpolation for all of your translations, but for specific
+translations only.</p>
 
-<p>We remove the <code>$translateProvider.useMessageFormatInterpolation()</code>. Now our app
-uses default interpolation again. Allright. Next, we have to make MessageFormat
+<p>At first, we remove <code>$translateProvider.useMessageFormatInterpolation()</code> again. Now our app
+uses default interpolation. Alright. Next, we have to make MessageFormat
 interpolation available as optional interpolation type. <code>$translateProvider</code>
 has a method <code>addInterpolation()</code> which expects a factory name for an interpolation
 service as first argument.</p>
 
-<p>Let's add MessageFormat interpolation service as 'optional' interpolation type:</p>
+<p>Let's add MessageFormat interpolation service as an 'optional' interpolation type:</p>
 
 <pre class="prettyprint linenums">
 $translateProvider.addInterpolation('$translateMessageFormatInterpolation');
 </pre>
 
-<p>Okay, our app now knows, that it has to use default interpolation, but is also aware
+<p>Okay, now, our app is configured using the default interpolation, but is also aware
 that there's another interpolation service that could be used for specific
 translations. We setup a new translation table with translations that use default
 interpolation and MessageFormat interpolation:</p>
@@ -155,12 +156,12 @@ $translateProvider.translations('en', {
 </pre>
 
 <p>Okay, our translation table now contains translations that use either default
-interpolation or MessageFormat interpolation. Now, to tell angular-translate
-which interpolation type to use when using <code>$translate</code> service to translate or
-translations, we can pass an additional parameter to angular-translate's components.</p>
+interpolation or MessageFormat interpolation. In order to tell angular-translate
+which interpolation type should be used when using <code>$translate</code> service , we can
+pass an additional parameter to angular-translate's components.</p>
 
-<p><code>$translate</code> service, expects an interpolation type as third argument. If you want
-to tell <code>$translate</code> service to use MessageFormat interpolation for the given
+<p>The <code>$translate</code> service expects an interpolation type as third argument. If you want
+to configure the <code>$translate</code> service to use MessageFormat interpolation for the given
 translation id, you have to pass <code>messageformat</code> as interpolation type, like this:</p>
 
 <pre class="prettyprint linenums">
@@ -171,8 +172,8 @@ $translate('PLURAL', { GENDER: 'male' }, 'messageformat');
 // "He liked this."
 </pre>
 
-<p>We can do the same with <code>translate</code> filter. Again, the third argument an
-identifier for the interpolation service:</p>
+<p>We can achieve the same with <code>translate</code> filter. As explained earlier, the third
+argument is an identifier for the interpolation service:</p>
 
 <pre class="prettyprint linenums">
 {{ 'TEXT' | translate:"{ val: 5 }" }}
@@ -198,7 +199,7 @@ translation id:</p>
 // "He liked this."
 </pre>
 
-<p>Here's a working example (note, there' also an embedded file for locale 'de'):</p>
+<p>Here is a working example (please note: There is also an embedded file for locale 'de'):</p>
 
 <h3>Source</h3>
 <div source-edit="myApp" source-edit-deps="angular.js script.js" source-edit-html="index.html-23" source-edit-css="" source-edit-js="script.js-22" source-edit-unit="" source-edit-scenario=""></div>
