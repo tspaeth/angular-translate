@@ -185,7 +185,6 @@ NG_DOCS={
     "angular.min.js",
     "angular-cookies.min.js",
     "angular-translate.min.js",
-    "angular-translate-interpolation-default.min.js",
     "angular-translate-interpolation-messageformat.min.js",
     "angular-translate-storage-cookie.min.js",
     "angular-translate-storage-local.min.js",
