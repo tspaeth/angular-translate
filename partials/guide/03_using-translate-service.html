@@ -40,8 +40,10 @@ and it'll return the concrete translation of that translation id. We also inject
 app.controller('Ctrl', ['$scope', '$translate', function ($scope, $translate) {
   $scope.headline = $translate('HEADLINE');
   $scope.paragraph = $translate('PARAGRAPH');
+  $scope.namespaced_paragraph = $translate('NAMESPACE.PARAGRAPH');
 }]);
 </pre>
+<strong>Note:</strong> Namespaced translations are accessed as JSON properties, see 'NAMESPACE.PARAGRAPH'`.</p>
 
 <p>That's all. Now when you think about translating the contents of a <code>&lt;title&gt;</code> you
 can do so within your controller. Here's a working sample:</p>
@@ -55,6 +57,7 @@ can do so within your controller. Here's a working sample:</p>
     <div ng-controller="Ctrl">
       <h2>{{headline}}</h2>
       <p>{{paragraph}}</p>
+      <p>{{namespaced_paragraph}}</p>
     </div>
   </script>
 </div>
@@ -63,7 +66,10 @@ can do so within your controller. Here's a working sample:</p>
 <script type="text/ng-template" id="script.js-4">
       var translations = {
         HEADLINE: 'What an awesome module!',
-        PARAGRAPH: 'Srsly!'
+        PARAGRAPH: 'Srsly!',
+        NAMESPACE: {
+          PARAGRAPH: 'And it comes with awesome features!'
+        }
       };
 
       var app = angular.module('myApp', ['pascalprecht.translate']);
@@ -77,6 +83,7 @@ can do so within your controller. Here's a working sample:</p>
         // expose translation via `$translate` service
         $scope.headline = $translate('HEADLINE');
         $scope.paragraph = $translate('PARAGRAPH');
+        $scope.namespaced_paragraph = $translate('NAMESPACE.PARAGRAPH');
       }]);
     </script>
 </div>

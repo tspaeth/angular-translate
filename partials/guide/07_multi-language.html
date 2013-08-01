@@ -73,6 +73,21 @@ learn more on that in detail later. To get around this, we introduced
 <code>preferredLanguage()</code>. You should always use <code>preferredLanguage()</code> instead of
 <code>uses()</code> on <code>$translateProvider</code>.</p>
 
+<h3 id="usinganotherlanguagetofallback">Using another language to fall back</h4>
+
+<p>This is all great but unfortunately the <code>preferredLanguage()</code> you just choose
+is incomplete. So you would like <code>angular-translate</code> to try a second language
+for these translations instead of displaying some empty or unformatted strings.
+The new <code>fallbackLanguage()</code> feature will let you tell <code>angular-translate</code> do so.
+which language to use in case it cannot find a translation in the currently
+used translation table. Its usage is basically the same as <code>preferredLanguage()</code>.</p>
+
+<pre class="prettyprint linenums">
+// tells angular-translate to use the english language if translations are not
+// available in german
+$translateProvider.fallbackLanguage('en');
+</pre>
+
 <h3 id="switchingthelanguageatruntime">Switching the language at runtime</h4>
 
 <p>To switch the language at runtime, <code>$translate</code> service has a method
@@ -174,6 +189,7 @@ app.controller('Ctrl', ['$translate', '$scope', function ($translate, $scope) {
       <p translate>{{ 'PASSED_AS_INTERPOLATION' }}</p>
       <p translate="{{ 'PASSED_AS_INTERPOLATION' }}"></p>
       <p translate="VARIABLE_REPLACEMENT" translate-values="{ name: 'PascalPrecht' }"></p>
+      <p translate>MISSING_TRANSLATION</p>
 
       <button ng-click="changeLanguage('de')" translate="BUTTON_LANG_DE"></button>
       <button ng-click="changeLanguage('en')" translate="BUTTON_LANG_EN"></button>
@@ -190,6 +206,7 @@ app.controller('Ctrl', ['$translate', '$scope', function ($translate, $scope) {
         PASSED_AS_ATTRIBUTE: 'I\'m passed as attribute value, cool ha?',
         PASSED_AS_INTERPOLATION: 'Beginners! I\'m interpolated!',
         VARIABLE_REPLACEMENT: 'Hi {{name}}',
+        MISSING_TRANSLATION: 'Oops! I have not been translated into german...',
         BUTTON_LANG_DE: 'german',
         BUTTON_LANG_EN: 'english'
       };
@@ -201,6 +218,7 @@ app.controller('Ctrl', ['$translate', '$scope', function ($translate, $scope) {
         PASSED_AS_ATTRIBUTE: 'Ich wurde als Attribut übergeben, cool oder?',
         PASSED_AS_INTERPOLATION: 'Anfänger! Ich bin interpoliert!',
         VARIABLE_REPLACEMENT: 'Hi {{name}}',
+        // MISSING_TRANSLATION is ... missing :)
         BUTTON_LANG_DE: 'deutsch',
         BUTTON_LANG_EN: 'englisch'
       };
@@ -212,6 +230,7 @@ app.controller('Ctrl', ['$translate', '$scope', function ($translate, $scope) {
         $translateProvider.translations('en', translationsEN);
         $translateProvider.translations('de', translationsDE);
         $translateProvider.preferredLanguage('en');
+        $translateProvider.fallbackLanguage('en');
       }]);
 
       app.controller('Ctrl', ['$translate', '$scope', function ($translate, $scope) {

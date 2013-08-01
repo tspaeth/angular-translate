@@ -110,6 +110,24 @@ the concrete translation for certain language. You don't even have to provide
 any information in your translation table, to which language it corresponds. But
 more on that later.</p>
 
+<p>You can also organize your translatations by enclosing them inside namespaces.
+This is particularly insteresting for big websites with many and/or long pages.
+All you have to do is to create nested JSON objects:</p>
+
+<pre><code class="json">{
+  "NAMESPACE": {
+    "SUB_NAMESPACE": {
+       "TRANSLATION_ID1": "This is a namespaced translation."
+    }
+  }
+}
+</code></pre>
+
+<p>This translation table only contains one translation, but you can expend very
+easily. You can have various nesting levels in your translation table, and each
+namespace can contain as many subnamespace as you want making it very flexible
+for you to use!</p>
+
 <p>Let's add a translation table to our app. <code>$translateProvider</code> provides a
 method called <code>translations()</code>, which takes care of that. Let's say we have a
 translation table like this:</p>
@@ -117,7 +135,10 @@ translation table like this:</p>
 <pre class="prettyprint linenums">
 var translations = {
   HEADLINE: 'What an awesome module!',
-  PARAGRAPH: 'Srsly!'
+  PARAGRAPH: 'Srsly!',
+  NAMESPACE: {
+    PARAGRAPH: 'And it comes with awesome features!'
+  }
 };
 </pre>
 
@@ -151,7 +172,10 @@ instantiated and used. Here's the working code:</p>
 <script type="text/ng-template" id="script.js-2">
       var translations = {
         HEADLINE: 'What an awesome module!',
-        PARAGRAPH: 'Srsly!'
+        PARAGRAPH: 'Srsly!',
+        NAMESPACE: {
+          PARAGRAPH: 'And it comes with awesome features!'
+        }
       };
 
       var app = angular.module('myApp', ['pascalprecht.translate']);
