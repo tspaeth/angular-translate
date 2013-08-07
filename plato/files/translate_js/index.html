@@ -45,11 +45,11 @@
   <div class="row">
     <div class="span6">
       <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"></i></a></h2>
-      <p class="stat">69.90</p>
+      <p class="stat">69.84</p>
     </div>
     <div class="span6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC"></i></h2>
-      <p class="stat">860</p>
+      <p class="stat">857</p>
     </div>
   </div>
   <div class="row historical">
@@ -63,11 +63,11 @@
   <div class="row">
     <div class="span6">
       <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty"></i></a></h2>
-      <p class="stat">47.52</p>
+      <p class="stat">46.91</p>
     </div>
     <div class="span6">
       <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs"></i></a></h2>
-      <p class="stat">2.87</p>
+      <p class="stat">2.90</p>
     </div>
   </div>
 </div>
@@ -110,13 +110,8 @@
     } else {
       $translate.uses(storage.get(key));
     }
-  } else {
-    if (angular.isString($translate.fallbackLanguage()) && $translate.fallbackLanguage() !== $translate.preferredLanguage()) {
-      $translate.load($translate.fallbackLanguage());
-    }
-    if (angular.isString($translate.preferredLanguage())) {
-      $translate.uses($translate.preferredLanguage());
-    }
+  } else if (angular.isString($translate.preferredLanguage())) {
+    $translate.uses($translate.preferredLanguage());
   }
 
 }]);
@@ -682,6 +677,58 @@ angular.module('pascalprecht.translate').provider('$translate', ['$STORAGE_KEY',
         pendingLoader = false,
         interpolatorHashMap = {};
 
+
+    /**
+     * @ngdoc function
+     * @name loadAsync
+     *
+     * @description
+     * Tells angular-translate to load a language asynchronously by given language key.
+     *
+     * @param {string} key Language key
+     * @return {Ibject} Promise resolved or rejected with given langkey
+     */
+    var loadAsync = function (key) {
+
+      if (!key) {
+        throw "No language key specified for loading.";
+      }
+
+      var deferred = $q.defer();
+
+      $rootScope.$broadcast('$translateLoadingStart');
+
+      pendingLoader = true;
+      $nextLang = key;
+
+      $injector.get($loaderFactory)(angular.extend($loaderOptions, {
+        key: key
+      })).then(function (data) {
+        $rootScope.$broadcast('$translateLoadingSuccess');
+        var translationTable = {};
+
+        if (angular.isArray(data)) {
+          angular.forEach(data, function (table) {
+            angular.extend(translationTable, table);
+          });
+        } else {
+          angular.extend(translationTable, data);
+        }
+
+        translations(key, translationTable);
+
+        pendingLoader = false;
+        deferred.resolve(key);
+        $rootScope.$broadcast('$translateLoadingEnd');
+      }, function (key) {
+        $rootScope.$broadcast('$translateLoadingError');
+        deferred.reject(key);
+        $rootScope.$broadcast('$translateLoadingEnd');
+      });
+
+      return deferred.promise;
+    };
+
     if ($storageFactory) {
       Storage = $injector.get($storageFactory);
 
@@ -831,13 +878,17 @@ angular.module('pascalprecht.translate').provider('$translate', ['$STORAGE_KEY',
      * @return {string} Language key
      */
     $translate.uses = function (key) {
-
       if (!key) {
         return $uses;
       }
 
-      var success = function () {
+      var deferred = $q.defer();
+
+      $rootScope.$broadcast('$translateChangeStart');
+
+      function useLanguage(key) {
         $uses = key;
+        $rootScope.$broadcast('$translateChangeSuccess');
 
         if ($storageFactory) {
           Storage.set($translate.storageKey(), $uses);
@@ -850,80 +901,22 @@ angular.module('pascalprecht.translate').provider('$translate', ['$STORAGE_KEY',
           interpolatorHashMap[id].setLocale($uses);
         });
 
-        $rootScope.$broadcast('translationChangeSuccess');
-      };
-
-      var error = function () {
-        $rootScope.$broadcast('translationChangeError');
-      };
-
-      return $translate.load(key, success, error);
-    };
-
-    /**
-     * @ngdoc function
-     * @name pascalprecht.translate.$translate#load
-     * @methodOf pascalprecht.translate.$translate
-     *
-     * @description
-     * Tells angular-translate to load a language asynchronously by given language key.
-     * Optionnal callbacks can be used for success/error specific tasks.
-     *
-     * @param {string} key Language key
-     * @param {function=} success Optionnal callback on loading success
-     * @param {function=} error Optionnal callback on loading error
-     * @return {string} Language key
-     */
-    $translate.load = function (key, success, error) {
-
-      if (!key) {
-        throw "No language key specified for loading.";
+        deferred.resolve(key);
+        $rootScope.$broadcast('$translateChangeEnd');
       }
 
-      var deferred = $q.defer();
-
+      // if there isn't a translation table for the language we've requested,
+      // we load it asynchronously
       if (!$translationTable[key]) {
-
-        pendingLoader = true;
-        $nextLang = key;
-
-        $injector.get($loaderFactory)(angular.extend($loaderOptions, {
-          key: key
-        })).then(function (data) {
-
-          var translationTable = {};
-
-          if (angular.isArray(data)) {
-            angular.forEach(data, function (table) {
-              angular.extend(translationTable, table);
-            });
-          } else {
-            angular.extend(translationTable, data);
-          }
-
-          translations(key, translationTable);
-
-          if (angular.isFunction(success)) {
-            success();
-          }
-
-          pendingLoader = false;
-          deferred.resolve(key);
-        }, function (key) {
-          if (angular.isFunction(error)) {
-            error();
-          }
+        loadAsync(key).then(useLanguage, function (key) {
+          $rootScope.$broadcast('$translateChangeError');
           deferred.reject(key);
+          $rootScope.$broadcast('$translateChangeEnd');
         });
-
-        return deferred.promise;
+      } else {
+        useLanguage(key);
       }
 
-      if (angular.isFunction(success)) {
-        success();
-      }
-
-      deferred.resolve(key);
       return deferred.promise;
     };
 
@@ -945,6 +938,10 @@ angular.module('pascalprecht.translate').provider('$translate', ['$STORAGE_KEY',
     // we should try to load them.
     if ($loaderFactory && angular.equals($translationTable, {})) {
       $translate.uses($translate.uses());
+    }
+
+    if ($fallbackLanguage && !$translationTable[$fallbackLanguage]) {
+      loadAsync($fallbackLanguage);
     }
 
     return $translate;

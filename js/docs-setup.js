@@ -13,10 +13,17 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "loadAsync",
+      "shortName": "loadAsync",
+      "type": "function",
+      "keywords": "angular-translate api asynchronously by function given key langkey language load loadasync or promise rejected resolved tells to with"
+    },
+    {
+      "section": "api",
       "id": "pascalprecht.translate.$translate",
       "shortName": "$translate",
       "type": "object",
-      "keywords": "$interpolate $log $q $rootscope $scope $translate actual also an and angular-translate api app asynchronously at available be by callback callbacks can care change choosed configured contents core currently data dynamic en_us error excepts fallback fallbacklanguage file for function given hash headline_text hello id in interpolate interpolateparams is isn it key language let load loaded loaders loading method object of on optional optionnal parameters pascalprecht preferred preferredlanguage promise proposedlanguage registered remember represents returns runtime service specific storage storagekey store storing success takes tasks tells text that the then this to token translate translatedtext translation translationid tries trying use used uses values when which with your"
+      "keywords": "$interpolate $log $q $rootscope $scope $translate actual also an and angular-translate api app asynchronously at available by care change choosed configured contents core currently data dynamic en_us excepts fallback fallbacklanguage file for function given hash headline_text hello id in interpolate interpolateparams is isn it key language let load loaded loaders method object of optional parameters pascalprecht preferred preferredlanguage promise proposedlanguage registered remember represents returns runtime service storage storagekey store storing takes tells text that the then this to token translate translatedtext translation translationid tries trying use used uses values when which with your"
     },
     {
       "section": "api",
