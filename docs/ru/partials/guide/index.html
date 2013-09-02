@@ -1,0 +1,151 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><h1 id="i18nangular">i18n для ваших Angular приложений - проще простого</h2>
+
+<h4 id="i18nl10n">простейший способ добавить i18n и l10n в ваши приложения!</h5>
+
+<p><br>
+Вы хотите добавить <strong>i18n</strong> и <strong>l10n</strong> к вашим приложениям и не можете найти простой способ, как это
+сделать? Вам поможет angular-translate. Он поставляется с очень полезными функциями и расширениями,
+а также проявляет ультра гибкость, когда дело доходит до настройки. Вот лишь некоторые из его
+замечательных возможностей:</p>
+
+<h2 id="">Возможности</h3>
+
+<ul>
+<li>Компоненты для перевода контента (фильтры/директивы)</li>
+<li>Асинхронная загрузка i18n данных</li>
+<li>Поддержка плюрализации с помощью <a href="https://github.com/SlexAxton/messageformat.js"><strong>MessageFormat.js</strong></a></li>
+<li>Расширяемость через простые в использовании интерфейсы</li>
+</ul>
+
+<p>Если вы полюбили этот модуль и используете его в своих проектах, пожалуйста, обнародуйте его на
+<a href="http://ngmodules.org/modules/angular-translate">ngmodules</a> и кликните на кнопку "<em>I use it</em>"!
+angular-translate легко установить и еще проще использовать! Прочитав это руководство вы научитесь
+использовать angular-translate и его замечательные функции! Давайте же начнем!</p>
+
+<h2 id="">Быстрый старт</h3>
+
+<p>Установите модуль с помощью Bower:</p>
+
+<pre><code>$ bower install angular-translate
+</code></pre>
+
+<p>Убедитесь, что подключили его в HTML документ:</p>
+
+<pre class="prettyprint linenums">
+&lt;script src="path/to/angular-translate.js"&gt;&lt;/script&gt;
+</pre>
+
+<p>Внедрите модуль <code>angular-translate</code> как зависимость в ваше приложение:</p>
+
+<pre class="prettyprint linenums">
+var app = angular.module('myApp', ['pascalprecht.translate']);
+</pre>
+
+<p>Научите ваше приложение переводам:</p>
+
+<pre class="prettyprint linenums">
+app.config(['$translateProvider', function ($translateProvider) {
+  $translateProvider.translations('en', {
+    'TITLE': 'Hello',
+    'FOO': 'This is a paragraph',
+  });
+
+  $translateProvider.translations('de', {
+    'TITLE': 'Hallo',
+    'FOO': 'Dies ist ein Paragraph'
+  });
+
+  $translateProvider.preferredLanguage('en');
+}]);
+</pre>
+
+<p>Переведите ваше приложение:</p>
+
+<pre class="prettyprint linenums">
+&lt;h1&gt;{{ 'TITLE' | translate }}&lt;/h1&gt;
+&lt;p&gt;{{ 'FOO' | translate }}&lt;/p&gt;
+</pre>
+
+<p>Вот как это выглядит:</p>
+
+<h3>Source</h3>
+<div source-edit="myApp" source-edit-deps="angular.js script.js" source-edit-html="index.html-29" source-edit-css="" source-edit-js="script.js-28" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-29" ng-html-wrap-loaded="myApp angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-29">
+    
+    <div ng-controller="Ctrl">
+      <button ng-click="changeLanguage('en')" translate="BUTTON_LANG_EN"></button>
+      <button ng-click="changeLanguage('de')" translate="BUTTON_LANG_DE"></button>
+      <h1 translate="TITLE"></h2>
+      <p translate="FOO"></p>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-28"></pre>
+<script type="text/ng-template" id="script.js-28">
+      var app = angular.module('myApp', ['pascalprecht.translate']);
+
+      app.config(['$translateProvider', function ($translateProvider) {
+        $translateProvider.translations('en', {
+          'TITLE': 'Hello',
+          'FOO': 'This is a paragraph',
+          'BUTTON_LANG_EN': 'english',
+          'BUTTON_LANG_DE': 'german'
+        });
+
+        $translateProvider.translations('de', {
+          'TITLE': 'Hallo',
+          'FOO': 'Dies ist ein Paragraph',
+          'BUTTON_LANG_EN': 'englisch',
+          'BUTTON_LANG_DE': 'deutsch'
+        });
+
+        $translateProvider.preferredLanguage('en');
+      }]);
+
+      app.controller('Ctrl', ['$scope', '$translate', function ($scope, $translate) {
+
+        $scope.changeLanguage = function (langKey) {
+          $translate.uses(langKey);
+        };
+      }]);
+    </script>
+</div>
+</div><h3>Demo</h3>
+<div class="well doc-example-live animator-container" ng-embed-app="myApp" ng-set-html="index.html-29" ng-eval-javascript="script.js-28"></div>
+
+<p>Это просто быстрый пример того, как работает angular-translate. В целом, все это работает так:
+"<em>предоставить данные i18n, дать о них знать angular-translate и использовать его компоненты для
+интерполяции ваших переводов некоторыми значениями.</em>". Просто, да?</p>
+
+<h2 id="">Полезные ресурсы</h3>
+
+<p>В сети есть пара очень полезных вещей, которые могут быть для вас интересны. Так что, не забудьте
+ознакомиться с этим списком:</p>
+
+<ul>
+<li><a href="https://github.com/PascalPrecht/angular-translate/wiki/Demos">Примеры и демо</a> - Сейчас на plnkr.co</li>
+<li><a href="http://angularjs.de/artikel/angularjs-i18n-ng-translate">Учебник на angularjs.de</a> - Статья на немецком</li>
+<li><a href="http://www.neoskop.de/blog/angular-translate">Учебник на neoskop.de</a> - Статья на немецком</li>
+<li><a href="http://github.com/PascalPrecht/angular-translate">angular-translate на GitHub</a> - Репозиторий на GitHub</li>
+<li><a href="http://ngmodules.org/modules/angular-translate">angular-translate на ngmodules.org</a></li>
+<li><a href="https://groups.google.com/forum/#!forum/angular-translate">angular-translate mailinglist</a> - Обсуждение, вопросы и др.</li>
+</ul>
+
+<h2 id="">Спасибо, сообщество!</h3>
+
+<p>Мы получили множество отличных отзывов от сообщества! Все больше людей используют модуль и они всегда
+остаются благодарными за него и потрясающую поддержку, которую они получают. Я просто хочу убедиться,
+что вы, ребята, знаете: все это было бы невозможно без этих <a href="http://github.com/PascalPrecht/angular-translate/contributors">замечательных участников</a>
+и всех, кто приходит с новыми идеями и пожеланиями! Так что <strong>СПАСИБО ВАМ</strong>!</p>
+
+<p><br></p>
+
+<hr>
+
+<p><center>Made with unicorn &hearts; love by <a href="http://github.com/PascalPrecht">PascalPrecht</a></center></p></div>

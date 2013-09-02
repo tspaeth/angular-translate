@@ -1,0 +1,47 @@
+<h1><code ng:non-bindable="">$translatePartialLoaderProvider</code>
+<span class="hint">(service in module <code ng:non-bindable="">pascalprecht.translate</code>
+)</span>
+</h1>
+<div><h2 id="Description">Description</h2>
+<div class="description"><p>By using a $translatePartialLoaderProvider you can configure a list of a needed translation parts 
+directly during the configuration phase of your application's lifetime. All parts you add by 
+using this provider would be loaded by the angular-translate at the startup as soon as possible.</p></div>
+<div class="member method"><h2 id="Methods">Methods</h2>
+<ul class="methods"><li><h3 id="addPart">addPart(name)</h3>
+<div class="addpart"><p>Registers a new part of the translation table to be loaded once the <code>angular-translate</code> gets
+into runtime phase. It does not actually load any translation data, but only registers a part
+to be loaded in the future.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">name – {string} – </code>
+<p>A name of the part to add</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>$translatePartialLoaderProvider, so this method is chainable</p></div>
+</div>
+</li>
+<li><h3 id="deletePart">deletePart(name)</h3>
+<div class="deletepart"><p>Removes the previously added part of the translation data. So, <code>angular-translate</code> will not
+load it at the startup.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">name – {string} – </code>
+<p>A name of the part to delete</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{object}</code>
+– <p>$translatePartialLoaderProvider, so this method is chainable</p></div>
+</div>
+</li>
+<li><h3 id="isPartAvailable">isPartAvailable(name)</h3>
+<div class="ispartavailable"><p>Checks if the specific part is available. A part becomes available after it was added by the 
+<code>addPart</code> method. Available parts would be loaded from the server once the <code>angular-translate</code>
+asks the loader to that.</p><h4 id="Parameters">Parameters</h4>
+<ul class="parameters"><li><code ng:non-bindable="">name – {string} – </code>
+<p>A name of the part to check</p></li>
+</ul>
+<h4 id="Returns">Returns</h4>
+<div class="returns"><code ng:non-bindable="">{boolean}</code>
+– <p>Returns <strong>true</strong> if the part is available now and <strong>false</strong> if not.</p></div>
+</div>
+</li>
+</ul>
+</div>
+</div>

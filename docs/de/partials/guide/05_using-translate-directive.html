@@ -1,0 +1,117 @@
+<h1><code ng:non-bindable=""></code>
+<span class="hint"></span>
+</h1>
+<div><h1 id="translatedirektivebenutzen">translate- Direktive benutzen</h2>
+
+<p>Neben dem Filter gibt es eine Direktive die man nutzen kann um Inhalte innerhalb
+des View-Layers zu übersetzen. Filter sind gut, Direktiven sind besser. Es hat
+sich herausgestellt, dass zu viele Filter im View eine App aufgrund zu vieler
+Watch-Expressions verlangsamen kann. Deswegen bietet <code>angular-translate</code> neben
+dem Filter eine Direktive.</p>
+
+<h2 id="allgemeinebenutzung">Allgemeine Benutzung</h3>
+
+<p>Es gibt verschiedene Möglichkeiten <code>translate</code>- Direktive zu verwenden. So sieht
+es generell aus:</p>
+
+<pre><code>&lt;ANY translate&gt;TRANSLATION_ID&lt;/ANY&gt;
+</code></pre>
+
+<p>Außerdem kannst du eine Translation ID auch als Attributwert übergeben:</p>
+
+<pre><code>&lt;ANY translate="TRANSLATION_ID"&gt;&lt;/ANY&gt;
+</code></pre>
+
+<p>Auch wenn das schon sehr flexibel ist, angular-translate bietet <strong>noch einen</strong>
+Weg, die Direktive zu nutzen. Gehen wir mal davon aus, dass eine Translation ID
+nicht als konkreter Identifier zur Verfügung steht, weil beispielsweise über ein
+Dataset geloopt wird. In solch einem Fall ist die Translation ID nur dynamisch
+verfügbar. Was bedeteut, sie muss interpoliert werden. Folgendes funktioniert also
+auch:</p>
+
+<pre><code>&lt;ANY translate="{{toBeInterpolated}}"&gt;&lt;/ANY&gt;
+</code></pre>
+
+<p>Und auch das hier, funktioniert:</p>
+
+<pre><code>&lt;ANY translate&gt;{{toBeInterpolated}}&lt;/ANY&gt;
+</code></pre>
+
+<p>Benutze sie so, wie es dir am besten passt!!</p>
+
+<p>Passen wir unser Beispiel an fügen ein paar neue Übersetzungen hinzu. Wie wär's
+mit Texten, die jede mögliche Verwendung der Direktive darstellen? Unsere Übersetzungstabelle
+könnte so aussehen:</p>
+
+<pre class="prettyprint linenums">
+var translations = {
+  HEADLINE: 'What an awesome module!',
+  PARAGRAPH: 'Srsly!',
+  PASSED_AS_TEXT: 'Hey there! I\'m passed as text value!',
+  PASSED_AS_ATTRIBUTE: 'I\'m passed as attribute value, cool ha?',
+  PASSED_AS_INTERPOLATION: 'Beginners! I\'m interpolated!'
+};
+</pre>
+
+<p>Anschließend passen wir unser View an:</p>
+
+<pre class="prettyprint linenums">
+&lt;h2&gt;{{ 'HEADLINE' | translate }}&lt;/h2&gt;
+&lt;p&gt;{{ 'PARAGRAPH' | translate }}&lt;/p&gt;
+
+&lt;p translate&gt;PASSED_AS_TEXT&lt;/p&gt;
+&lt;p translate="PASSED_AS_ATTRIBUTE"&gt;&lt;/p&gt;
+&lt;p translate&gt;{{ 'PASSED_AS_INTERPOLATION' }}&lt;/p&gt;
+&lt;p translate="{{ 'PASSED_AS_INTERPOLATION' }}"&gt;&lt;/p&gt;
+</pre>
+
+<p>Die neue App sieht dann so aus:</p>
+
+<h3>Source</h3>
+<div source-edit="myApp" source-edit-deps="angular.js script.js" source-edit-html="index.html-9" source-edit-css="" source-edit-js="script.js-8" source-edit-unit="" source-edit-scenario=""></div>
+<div class="tabbable"><div class="tab-pane" title="index.html">
+<pre class="prettyprint linenums" ng-set-text="index.html-9" ng-html-wrap-loaded="myApp angular.js script.js"></pre>
+<script type="text/ng-template" id="index.html-9">
+    
+    <div ng-controller="Ctrl">
+      <h3>{{ 'HEADLINE' | translate }}</h3>
+      <p>{{ 'PARAGRAPH' | translate }}</p>
+
+      <p translate>PASSED_AS_TEXT</p>
+      <p translate="PASSED_AS_ATTRIBUTE"></p>
+      <p translate>{{ 'PASSED_AS_INTERPOLATION' }}</p>
+      <p translate="{{ 'PASSED_AS_INTERPOLATION' }}"></p>
+    </div>
+  </script>
+</div>
+<div class="tab-pane" title="script.js">
+<pre class="prettyprint linenums" ng-set-text="script.js-8"></pre>
+<script type="text/ng-template" id="script.js-8">
+      var translations = {
+        HEADLINE: 'What an awesome module!',
+        PARAGRAPH: 'Srsly!',
+        PASSED_AS_TEXT: 'Hey there! I\'m passed as text value!',
+        PASSED_AS_ATTRIBUTE: 'I\'m passed as attribute value, cool ha?',
+        PASSED_AS_INTERPOLATION: 'Beginners! I\'m interpolated!'
+      };
+
+      var app = angular.module('myApp', ['pascalprecht.translate']);
+
+      app.config(['$translateProvider', function ($translateProvider) {
+        // add translation table
+        $translateProvider.translations(translations);
+      }]);
+
+      app.controller('Ctrl', ['$scope', function ($scope) {
+
+      }]);
+    </script>
+</div>
+</div><h3>Demo</h3>
+<div class="well doc-example-live animator-container" ng-embed-app="myApp" ng-set-html="index.html-9" ng-eval-javascript="script.js-8"></div>
+
+<p><br></p>
+
+<hr>
+
+<p><center>Made with unicorn &hearts; love by <a href="http://github.com/PascalPrecht">PascalPrecht</a></center></p></div>
