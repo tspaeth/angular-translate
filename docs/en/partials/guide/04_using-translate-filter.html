@@ -5,13 +5,13 @@
 
 <p>In <a href="#/guide/03_using-translate-service">Using $translate service</a> you've learned
 how to use <code>$translate</code> service to translate your contents with registered
-translation id's. Of course, it's pretty cool that this works, but you actually
+translation IDs. Of course, it's pretty cool that this works, but you actually
 don't want to bind your translation to hard to controllers or services. You mainly
 want to translate your contents in the view layer because this is where it all
 belongs to.</p>
 
 <p>angular-translate provides a filter component with which you are able to translate
-your translation id's within the view layer, without letting any controller or
+your translation IDs within the view layer, without letting any controller or
 service know of them. This means, you can decouple the translate logic from any
 controller or service an make your view layer replaceable without touching
 business logic code.</p>
@@ -25,7 +25,7 @@ Angular filters right
 <p>The same goes for angular-translate's <code>translate</code> filter. We can update our
 example from
 <a href="#/guide/03_using-translate-service#generalusage">Using $translate service</a>
-just by transfering the controller logic to our view layer. Basically  the
+just by transfering the controller logic to our view layer. Basically the
 <code>translate</code> filter works like this:</p>
 
 <pre><code>&lt;ANY&gt;{{ TRANSLATION_ID | translate }}&lt;/ANY&gt;
@@ -81,7 +81,7 @@ just like this:</p>
 polluting your controllers logic with translation logic. The whole translation
 stuff is decoupled from your business logic and makes your app much more flexible
 when it comes to a view layer replacement! The next chapter shows you how to
-do the same with the provides <code>translate</code> directive.</p>
+do the same with the provided <code>translate</code> directive.</p>
 
 <p><br></p>
 

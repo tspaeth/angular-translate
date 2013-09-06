@@ -16,13 +16,13 @@ own loaders very easily. This chapter shows you how to do it!</p>
 
 <h2 id="buildingacustomloaderservice">Building a custom loader service</h3>
 
-<p>If non of the provided loaders fit to your needs, you can register a custom
+<p>If non of the provided loaders fits to your needs, you can register a custom
 asynchronous loader as a factory. The factory has to return a function, which
 expects an object where at least the language key property exists. With this
-architecture you're as free as possible and have the full control of how your
+architecture you're as free as possible and have full control of how your
 asynchronous loader should behave.</p>
 
-<p>A custom loader factory could look something like this:</p>
+<p>A custom loader factory could look like this:</p>
 
 <pre class="prettyprint linenums">
 app.factory('customLoader', function ($http, $q) {
@@ -43,7 +43,7 @@ app.factory('customLoader', function ($http, $q) {
 });
 </pre>
 
-<p>You have to make sure, that your loader function returns a promise. It should either
+<p>You have to make sure that your loader function returns a promise. It should either
 gets resolved with your translation data, or rejected with the language key. As
 you can see, there's a <code>key</code> property on the <code>options</code> object. It has the value
 of the language key with which the asynchronous loader is invoked.</p>
@@ -64,10 +64,10 @@ does the rest for you.</p>
 
 <h2 id="addingadditionaloptions">Adding additional options</h3>
 
-<p>The <code>options.key</code> property indicates, that <code>options</code> is just an object. You can
-extend it with additional properties to your own needs. For example you could
+<p>The <code>options.key</code> property indicates that <code>options</code> is just an object. You can
+extend it with additional properties to fit your own needs. For example you could
 expect a property <code>foo</code> on the <code>options</code> object, all you have to do is to provide
-the propery when registering your custom loader factory.</p>
+the property when registering your custom loader factory.</p>
 
 <p>So, if we need a property <code>foo</code> with a value <code>bar</code> we can pass it like this:</p>
 
@@ -213,7 +213,7 @@ $translateProvider.useLoader('asyncLoader');
 <div class="well doc-example-live animator-container" ng-embed-app="myApp" ng-set-html="index.html-21" ng-eval-javascript="script.js-20"></div>
 
 <p>When changing the language by clicking the <code>german</code> button, you see the app waits
-2 seconds until it resolves with the new translation data. Is that cool?</p>
+2 seconds until it resolves with the new translation data. Isn't that cool?</p>
 
 <p><br></p>
 

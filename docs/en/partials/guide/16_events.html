@@ -3,19 +3,19 @@
 </h1>
 <div><h1 id="events">Events</h2>
 
-<p>angular-translate triggers some custom events on <code>$rootScope</code> you can react on,
+<p>angular-translate triggers some custom events on <code>$rootScope</code> you can react on
 once they are fired. This document describes the different events and when they
 get fired.</p>
 
 <h2 id="general">General</h3>
 
-<p>Some events get fired independently on how you have configured angular-translate.
+<p>Some events get fired independently from how you have configured angular-translate.
 These are general events you could always expect to be fired.</p>
 
 <h4 id="dtranslatechangestart"><code>$translateChangeStart</code></h5>
 
 <p>Gets fired anytime angular-translate starts to try to change the language. This is
-on startup, when setting the language the first time, or when changing the language
+at startup, when setting the language the first time, or when changing the language
 at runtime using <code>$translate.uses()</code>. This event gets also fired when angular-translate
 has to load translation data asynchronously first.</p>
 
@@ -23,7 +23,7 @@ has to load translation data asynchronously first.</p>
 
 <p>As the event name says, this gets fired once a translation change was successful.
 When not using an asynchronous loader, this event gets usually fired immediatly
-after <code>$translateChangeStart</code> event. This event gets also fired, after an
+after <code>$translateChangeStart</code> event. This event gets also fired after an
 asynchronous loader had to load translation data first.</p>
 
 <h4 id="dtranslatechangeerror"><code>$translateChangeError</code></h5>
@@ -34,7 +34,7 @@ asynchronous loader rejects a returned promise.</p>
 <h4 id="dtranslatechangeend"><code>$translateChangeEnd</code></h5>
 
 <p>Gets always fired when a translation change ends, wether it was successful or
-not and after all registered interpolation services have been notified about the
+not, and after all registered interpolation services have been notified about the
 translation change.</p>
 
 <h2 id="asynchronousloading">Asynchronous loading</h3>
@@ -53,7 +53,7 @@ loader gets invoked, right after <code>$translateChangeStart</code> has been fir
 
 <h4 id="dtranslateloadingerror"><code>$translateLoadingError</code></h5>
 
-<p>Gets fired when the asynchronous loader returns with rejected promise.</p>
+<p>Gets fired when the asynchronous loader returns with a rejected promise.</p>
 
 <h4 id="dtranslateloadingend"><code>$translateLoadingEnd</code></h5>
 

@@ -4,9 +4,9 @@
 <div><h1 id="customstorages">Custom Storages</h2>
 
 <p>If you've read <a href="#/guide/08_storages">Storages</a>, you know how to use either
-cookiesStorage, or localStorage, to let your app remember the last choosed
-language over cross http requests. If both, localStorage and cookieStorage don't
-fit to your needs, you can simply build your own storage service and use that
+cookiesStorage, or localStorage, to let your app remember the last chosen
+language over cross http requests. If neither localStorage nor cookieStorage
+fits your needs, you can simply build your own storage service and use that
 instead.</p>
 
 <h2 id="buildingacustomstorageservice">Building a custom storage service</h3>
@@ -35,9 +35,9 @@ app.factory('customStorage', function () {
 
 <p>Easy, right? As you can see, <code>set()</code> expects two arguments. A name and a value. So
 you work with simple key-value pairs. On the other side, <code>get()</code> just needs a name
-to request a value. Provide a custom storage as a separate service gives you high
-flexibility when it comes to use this services in a different place. In addition
-to that, testing this service is pretty easy, since its isolated.</p>
+to request a value. Providing a custom storage as a separate service gives you high
+flexibility when it comes to use this service in a different place. In addition
+to that, testing this service is pretty easy, since it's isolated.</p>
 
 <h2 id="usingthecustomstorageservice">Using the custom storage service</h3>
 
@@ -53,7 +53,7 @@ $translateProvider.useStorage('customStorage');
 
 <p>angular-translate will use <code>$injector</code> to get an instance of the given factory
 name, which is in our case <code>customStorage</code>, and is then able to access its methods
-at runtime to save the last choosed language.</p>
+at runtime to save the last chosen language.</p>
 
 <h3>Source</h3>
 <div source-edit="myApp" source-edit-deps="angular.js script.js" source-edit-html="index.html-17" source-edit-css="" source-edit-js="script.js-16" source-edit-unit="" source-edit-scenario=""></div>
@@ -135,7 +135,7 @@ at runtime to save the last choosed language.</p>
 <div class="well doc-example-live animator-container" ng-embed-app="myApp" ng-set-html="index.html-17" ng-eval-javascript="script.js-16"></div>
 
 <p>Of course, our custom service doesn't do anything, which is why you can refresh
-the browser as often as you want, the app wouldn't remember the language.</p>
+the browser as often as you want, the app won't remember the language.</p>
 
 <p><br></p>
 
